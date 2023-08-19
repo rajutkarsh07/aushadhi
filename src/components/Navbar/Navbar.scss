@@ -1,0 +1,39 @@
+.navbar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  // border: 2px solid black;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 2px 4px 18px 0px rgba(0, 0, 0, 0.15);
+
+  img {
+    width: 250px;
+    height: auto;
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border: 2px solid #d1dfb3;
+
+    p {
+      font-size: 18px;
+      font-weight: 500;
+      // border: 2px solid black;
+      padding: 10px 20px;
+      transition: all 0.2s;
+    }
+    p:hover {
+      cursor: pointer;
+      border-radius: 2px;
+      background: #a1af82;
+      color: #fff;
+      box-shadow: 2px 4px 18px 0px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
