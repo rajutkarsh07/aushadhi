@@ -12,19 +12,11 @@ const Homepage = () => {
           <Typewriter
             onInit={(typewriter) => {
               typewriter
-                .typeString("Aushadhi")
+                .typeString("Welcome")
                 .pauseFor(1000)
                 .deleteAll()
-                .typeString("your anti diabetic friend")
+                .typeString("To your personal drug recommending assitant")
                 .pauseFor(1000)
-                .deleteAll()
-                .typeString("Aushadhi")
-                .pauseFor(1000)
-                .deleteAll()
-                .typeString("your anti diabetic friend")
-                .pauseFor(1000)
-                .deleteAll()
-                .typeString("Aushadhi")
                 .start();
             }}
           />

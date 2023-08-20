@@ -3,85 +3,156 @@ import "./InputComponent.scss";
 
 import Select from "react-dropdown-select";
 // import User from "../../components/user/user.component";
-import users from "../../data/users";
-import locations from "../../data/locations";
-import jobRoles from "../../data/jobRoles";
+
+import acresult from "../../data/acresult";
+import admissionType from "../../data/admissionType";
+import age from "../../data/age";
+import change from "../../data/change";
+import diabetesMed from "../../data/diabetesMed";
+import disease from "../../data/disease";
+import gender from "../../data/gender";
+import maxGluSerum from "../../data/maxGluSerum";
+import medications from "../../data/medications";
+import race from "../../data/race";
 
 const InputComponent = () => {
-  const [selectedJobRoles, setSelectedJobRoles] = useState([]);
-  const [selectedLocations, setSelectedLocations] = useState([]);
-  const [searchResults, setSearchResults] = useState(users);
+  const [selectedDisease, setSelectedDisease] = useState([]);
+  const [selectedMedications, setSelectedMedications] = useState([]);
 
-  const handleJobChange = (selectedJobRoles) => {
-    setSelectedJobRoles(selectedJobRoles);
+  const [selectedAcResult, setSelectedAcResult] = useState("");
+  const [selectedAdmissionType, setSelectedAdmissionType] = useState("");
+  const [selectedAge, setSelectedAge] = useState("");
+  const [selectedChange, setSelectedChange] = useState("");
+  const [selectedDiabetesMed, setSelectedDiabetesMed] = useState("");
+  const [selectedGender, setSelectedGender] = useState("");
+  const [selectedMaxGluSerum, setSelectedMaxGluSerum] = useState("");
+  const [selectedRace, setSelectedRace] = useState("");
+
+  const handleAcResult = (selectedAcResult) => {
+    setSelectedAcResult(selectedAcResult);
   };
 
-  const handleLocationChange = (selectedLocations) => {
-    setSelectedLocations(selectedLocations);
+  const handleAdmissionType = (selectedAdmissionType) => {
+    setSelectedAdmissionType(selectedAdmissionType);
   };
 
-  const search = () => {
-    if (selectedJobRoles.length == 0 && selectedLocations.length == 0) {
-      setSearchResults(users);
-    } else {
-      const filteredUsers = users.filter(
-        (user) =>
-          selectedJobRoles.some((role) => role.label === user.role) &&
-          selectedLocations.some((location) => location.label === user.location)
-      );
-
-      setSearchResults(filteredUsers);
-    }
+  const handleAge = (selectedAge) => {
+    setSelectedAge(selectedAge);
   };
 
-  // console.log(searchResults);
+  const handleChange = (selectedChange) => {
+    setSelectedChange(selectedChange);
+  };
+
+  const handleDiabetesMed = (selectedDiabetesMed) => {
+    setSelectedDiabetesMed(selectedDiabetesMed);
+  };
+
+  const handleGender = (selectedGender) => {
+    setSelectedGender(selectedGender);
+  };
+
+  const handleMaxGluSerum = (selectedMaxGluSerum) => {
+    setSelectedMaxGluSerum(selectedMaxGluSerum);
+  };
+
+  const handleRace = (selectedRace) => {
+    setSelectedRace(selectedRace);
+  };
+
+  const handleDisease = (selectedDisease) => {
+    setSelectedDisease(selectedDisease);
+  };
+
+  const handleSelectedMedications = (selectedMedications) => {
+    setSelectedMedications(selectedMedications);
+  };
 
   return (
     <div className="inputcomponent">
       <div className="searchBox">
         <div className="input">
-          <label>Select job roles</label>
+          <label>A1C Result</label>
           <Select
-            multi
-            options={jobRoles}
-            onChange={handleJobChange}
+            options={acresult}
+            onChange={handleAcResult}
             className="select"
-            values={selectedJobRoles}
+            // values={selectedJobRoles}
           />
         </div>
 
         <div className="input">
-          <label>Select Locations</label>
+          <label>Admission Type</label>
           <Select
-            multi
-            options={locations}
-            onChange={handleLocationChange}
+            options={admissionType}
+            onChange={handleAdmissionType}
             className="select"
-            values={selectedLocations}
           />
         </div>
 
-        <a onClick={search} className="btn">
+        <div className="input">
+          <label>Age</label>
+          <Select options={age} onChange={handleAge} className="select" />
+        </div>
+
+        <div className="input">
+          <label>Change</label>
+          <Select options={change} onChange={handleChange} className="select" />
+        </div>
+
+        <div className="input">
+          <label>Have you taken anti-diabetes medicine?</label>
+          <Select
+            options={diabetesMed}
+            onChange={handleDiabetesMed}
+            className="select"
+          />
+        </div>
+
+        <div className="input">
+          <label>Gender</label>
+          <Select options={gender} onChange={handleGender} className="select" />
+        </div>
+
+        <div className="input">
+          <label>Max Glu Serum</label>
+          <Select
+            options={maxGluSerum}
+            onChange={handleMaxGluSerum}
+            className="select"
+          />
+        </div>
+
+        <div className="input">
+          <label>Race</label>
+          <Select options={race} onChange={handleRace} className="select" />
+        </div>
+
+        <div className="input">
+          <label>Disease</label>
+          <Select
+            multi
+            options={disease}
+            onChange={handleDisease}
+            className="select"
+          />
+        </div>
+
+        <div className="input">
+          <label>Selected Medications</label>
+          <Select
+            multi
+            options={medications}
+            onChange={handleSelectedMedications}
+            className="select"
+          />
+        </div>
+
+        <a onClick={() => console.log("meow")} className="btn">
           Search Candiates
         </a>
       </div>
-      <p>{`${searchResults.length} results found`}</p>
-      <div className="user-list">
-        {/* {searchResults.length > 0 ? (
-          searchResults.map((user) => (
-            <User
-              key={user.id}
-              name={user.name}
-              email={user.email}
-              role={user.role}
-              link={user.linkedin}
-              location={user.location}
-            />
-          ))
-        ) : (
-          <p>No results found</p>
-        )} */}
-      </div>
+      <div className="user-list"></div>
     </div>
   );
 };
