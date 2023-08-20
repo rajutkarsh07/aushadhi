@@ -12,6 +12,7 @@ import diabetesMed from "../../data/diabetesMed";
 import disease from "../../data/disease";
 import gender from "../../data/gender";
 import maxGluSerum from "../../data/maxGluSerum";
+import medDetails from "../../data/medDeatils";
 import medications from "../../data/medications";
 import race from "../../data/race";
 
@@ -22,6 +23,7 @@ const InputComponent = () => {
 
   const [selectedDisease, setSelectedDisease] = useState([]);
   const [selectedMedications, setSelectedMedications] = useState([]);
+  const [selectedType, setSelectedType] = useState([]);
 
   const [selectedAcResult, setSelectedAcResult] = useState("");
   const [selectedAdmissionType, setSelectedAdmissionType] = useState("");
@@ -75,6 +77,11 @@ const InputComponent = () => {
   const handleSelectedMedications = (selectedMedications) => {
     setSelectedMedications(selectedMedications);
   };
+  const handleSelectedType = (newValue) => {
+    const newArray = [...selectedType, newValue[0]]; // Replace 'newValue' with your actual value
+    console.log(newArray);
+    setSelectedType(newArray);
+  };
 
   let result = [];
 
@@ -124,9 +131,19 @@ const InputComponent = () => {
     }
 
     //giving random data for now
-
+    let q = 0;
     for (let i = 0; i < medications.length; i++) {
-      result.push(-1);
+      let flag = false;
+      for (let j = 0; j < selectedMedications.length; j++) {
+        if (selectedMedications[j] == medications[i]) {
+          result.push(selectedType[j].value);
+          flag = true;
+          break;
+        }
+      }
+      if (flag == false) {
+        result.push(-1.0);
+      }
     }
 
     // result.push(selectedRace[0].value);
@@ -274,6 +291,18 @@ const InputComponent = () => {
             onChange={handleSelectedMedications}
             className="select"
           />
+        </div>
+        <div className="input">
+          {selectedMedications?.map((val) => (
+            <div>
+              <label>{val.label}</label>
+              <Select
+                options={medDetails}
+                onChange={handleSelectedType}
+                className="select"
+              />
+            </div>
+          ))}
         </div>
 
         <a onClick={handleSearch} className="btn">
