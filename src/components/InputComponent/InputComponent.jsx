@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./InputComponent.scss";
 
 import Select from "react-dropdown-select";
-// import User from "../../components/user/user.component";
+import { HashLoader } from "react-spinners";
 
 import acresult from "../../data/acresult";
 import admissionType from "../../data/admissionType";
@@ -15,7 +15,11 @@ import maxGluSerum from "../../data/maxGluSerum";
 import medications from "../../data/medications";
 import race from "../../data/race";
 
+import axios from "axios";
+
 const InputComponent = () => {
+  const [loading, setLoading] = useState(false);
+
   const [selectedDisease, setSelectedDisease] = useState([]);
   const [selectedMedications, setSelectedMedications] = useState([]);
 
@@ -74,7 +78,7 @@ const InputComponent = () => {
 
   let result = [];
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     let diseaseVal = [];
     for (let i = 0; i < disease.length; i++) {
       if (disease[i] === selectedDisease[0].value) {
@@ -94,16 +98,6 @@ const InputComponent = () => {
     result.push(selectedAcResult[0].value);
     result.push(selectedChange[0].value);
     result.push(selectedDiabetesMed[0].value);
-
-    // for (let i = 0; i < disease.length; i++) {
-    //   for (let j = 0; j < selectedDisease.length; j++) {
-    //     if (disease[i].value === selectedDisease[j].value) {
-    //       result.push(1);
-    //     } else {
-    //       result.push(0);
-    //     }
-    //   }
-    // }
 
     for (let i = 0; i < disease.length; i++) {
       let found = false;
@@ -136,8 +130,32 @@ const InputComponent = () => {
     }
 
     // result.push(selectedRace[0].value);
+    // const floatResult = result.map((value) => parseFloat(value));
+    const floatResult = result.map((value) => value * 1.0);
 
-    console.log(result);
+    console.log(floatResult);
+
+    try {
+      const config = {
+        headers: {
+          "content-type": "application/json",
+        },
+      };
+      setLoading(true);
+      const { data } = await axios.post(
+        "https://aushadhi-services.onrender.com/predict",
+        {
+          new: floatResult,
+        },
+        config
+      );
+      console.log(data);
+
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      console.error(err);
+    }
   };
 
   // console.log(selectedAcResult);
@@ -262,7 +280,7 @@ const InputComponent = () => {
           Search Candiates
         </a>
       </div>
-      <div className="user-list"></div>
+      <div className="user-list">{loading ? <HashLoader /> : ""}</div>
     </div>
   );
 };

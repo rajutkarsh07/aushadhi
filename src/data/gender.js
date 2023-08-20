@@ -1,6 +1,6 @@
 const gender = [
-  { value: "1.0", label: "Male" },
-  { value: "2.0", label: "Female" },
+  { value: 0.0, label: "Female" },
+  { value: 1.0, label: "Male" },
 ];
 
 export default gender;
