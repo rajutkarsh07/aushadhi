@@ -27,6 +27,11 @@ const Homepage = () => {
           <AiOutlineSearch className="icon" />
         </div>
 
+        <a href="#inputComp" className="btn">
+          Scroll Down to get personalised report
+        </a>
+      </div>
+      <div id="inputComp">
         <InputComponent />
       </div>
     </div>
