@@ -1,5 +1,8 @@
+/* eslint-disable react/jsx-key */
 import { useState } from "react";
 import "./InputComponent.scss";
+
+import assured from "../../images/flipkartassured.png";
 
 import Select from "react-dropdown-select";
 import { HashLoader } from "react-spinners";
@@ -37,6 +40,8 @@ const InputComponent = () => {
   const [selectedWeight, setSelectedWeight] = useState("");
   const [selectedTimeInHospital, setSelectedTimeInHospital] = useState("");
   const [selectedNumOfMedications, setSelectedNumOfMedications] = useState("");
+
+  const [medicine, setMedicine] = useState([]);
 
   const handleAcResult = (selectedAcResult) => {
     setSelectedAcResult(selectedAcResult);
@@ -131,7 +136,6 @@ const InputComponent = () => {
     }
 
     //giving random data for now
-    let q = 0;
     for (let i = 0; i < medications.length; i++) {
       let flag = false;
       for (let j = 0; j < selectedMedications.length; j++) {
@@ -167,6 +171,7 @@ const InputComponent = () => {
         config
       );
       console.log(data);
+      setMedicine(data.indices);
 
       setLoading(false);
     } catch (err) {
@@ -188,15 +193,26 @@ const InputComponent = () => {
 
   return (
     <div className="inputcomponent">
+      <h2>Fill the form to get personalised medicine recommendation</h2>
       <div className="searchBox">
         <div className="input">
           <label>Gender</label>
-          <Select options={gender} onChange={handleGender} className="select" />
+          <Select
+            options={gender}
+            onChange={handleGender}
+            className="select"
+            color="#a1af82"
+          />
         </div>
 
         <div className="input">
           <label>Age</label>
-          <Select options={age} onChange={handleAge} className="select" />
+          <Select
+            options={age}
+            onChange={handleAge}
+            className="select"
+            color="#a1af82"
+          />
         </div>
 
         <div className="input">
@@ -214,6 +230,7 @@ const InputComponent = () => {
             options={admissionType}
             onChange={handleAdmissionType}
             className="select"
+            color="#a1af82"
           />
         </div>
 
@@ -236,27 +253,34 @@ const InputComponent = () => {
         </div>
 
         <div className="input">
-          <label>Max Glu Serum</label>
+          <label>Have you taken Glucose tolerence test?</label>
           <Select
             options={maxGluSerum}
             onChange={handleMaxGluSerum}
             className="select"
+            color="#a1af82"
           />
         </div>
 
         <div className="input">
-          <label>A1C Result</label>
+          <label>Have you taken A1C Test?</label>
           <Select
             options={acresult}
             onChange={handleAcResult}
             className="select"
+            color="#a1af82"
             // values={selectedJobRoles}
           />
         </div>
 
         <div className="input">
-          <label>Change</label>
-          <Select options={change} onChange={handleChange} className="select" />
+          <label>Did you change your earlier medications?</label>
+          <Select
+            options={change}
+            onChange={handleChange}
+            className="select"
+            color="#a1af82"
+          />
         </div>
 
         <div className="input">
@@ -265,33 +289,42 @@ const InputComponent = () => {
             options={diabetesMed}
             onChange={handleDiabetesMed}
             className="select"
+            color="#a1af82"
           />
         </div>
 
         <div className="input">
-          <label>Disease</label>
+          <label>Disease you are diagnosed with?</label>
           <Select
             multi
             options={disease}
             onChange={handleDisease}
             className="select"
+            color="#a1af82"
           />
         </div>
 
         <div className="input">
           <label>Race</label>
-          <Select options={race} onChange={handleRace} className="select" />
+          <Select
+            options={race}
+            onChange={handleRace}
+            className="select"
+            color="#a1af82"
+          />
         </div>
 
         <div className="input">
-          <label>Selected Medications</label>
+          <label>Medications taken for diabetes</label>
           <Select
             multi
             options={medications}
             onChange={handleSelectedMedications}
             className="select"
+            color="#a1af82"
           />
         </div>
+        <label>Specify doses for selected medicine?</label>
         <div className="input">
           {selectedMedications?.map((val) => (
             <div>
@@ -300,16 +333,29 @@ const InputComponent = () => {
                 options={medDetails}
                 onChange={handleSelectedType}
                 className="select"
+                color="#a1af82"
               />
             </div>
           ))}
         </div>
 
         <a onClick={handleSearch} className="btn">
-          Search Candiates
+          Search Medicines
         </a>
       </div>
-      <div className="user-list">{loading ? <HashLoader /> : ""}</div>
+      <div className="loader">
+        {loading ? <HashLoader /> : ""}
+        <h3>Recommended Medicines</h3>
+      </div>
+      <div className="med">
+        {medicine?.map((item, i) => (
+          <div className="box">
+            {i + 1}. {item}
+            <a href="#">Buy this on Flipkart</a>
+            <img src={assured} alt="flipkart Assured" />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
